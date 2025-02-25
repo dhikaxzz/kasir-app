@@ -14,13 +14,20 @@ class Transaksi extends Model
     protected $fillable = [
         'kode_transaksi',
         'tanggal',
+        'pelanggan_id', 
         'total_harga',
         'total_bayar',
+        'kembalian',
         'metode_pembayaran',
     ];
 
     public function detailTransaksi()
     {
         return $this->hasMany(DetailTransaksi::class);
+    }
+
+    public function pelanggan()
+    {
+        return $this->belongsTo(Pelanggan::class);
     }
 }

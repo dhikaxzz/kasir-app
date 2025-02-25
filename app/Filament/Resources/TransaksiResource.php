@@ -17,6 +17,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Repeater;
 
 class TransaksiResource extends Resource
 {
@@ -34,15 +35,68 @@ class TransaksiResource extends Resource
     {
         return $form
         ->schema([
-            TextInput::make('kode_transaksi')->unique(ignoreRecord: true)->required(),
-            
+            TextInput::make('kode_transaksi')
+                ->unique(ignoreRecord: true)
+                ->required(),
+
             DateTimePicker::make('tanggal')
                 ->default(now())
                 ->label('Tanggal Transaksi')
                 ->disabled(),
 
-            TextInput::make('total_harga')->numeric()->required(),
-            TextInput::make('total_bayar')->numeric()->required(),
+            Select::make('pelanggan_id')
+                ->relationship('pelanggan', 'nama')
+                ->searchable()
+                ->required(),
+
+            Repeater::make('detailTransaksi')
+                ->relationship('detailTransaksi')
+                ->schema([
+                    Select::make('barang_id')
+                        ->relationship('barang', 'nama_barang')
+                        ->searchable()
+                        ->required(),
+
+                    TextInput::make('jumlah')
+                        ->numeric()
+                        ->default(1)
+                        ->reactive()
+                        ->afterStateUpdated(fn ($state, callable $set, callable $get) => 
+                            $set('subtotal', $get('harga_satuan') * $state)
+                        )
+                        ->required(),
+
+                    TextInput::make('harga_satuan')
+                        ->numeric()
+                        ->reactive()
+                        ->afterStateUpdated(fn ($state, callable $set, callable $get) => 
+                            $set('subtotal', $state * $get('jumlah'))
+                        )
+                        ->required(),
+
+                    TextInput::make('subtotal')
+                        ->numeric()
+                        ->disabled()
+                        ->required(),
+                ]),
+
+            TextInput::make('total_harga')
+                ->numeric()
+                ->disabled()
+                ->default(0),
+
+            TextInput::make('total_bayar')
+                ->numeric()
+                ->reactive()
+                ->afterStateUpdated(fn ($state, callable $set, callable $get) => 
+                    $set('kembalian', $state - $get('total_harga'))
+                )
+                ->required(),
+
+            TextInput::make('kembalian')
+                ->numeric()
+                ->disabled()
+                ->default(0),
 
             Select::make('metode_pembayaran')
                 ->options([
@@ -52,7 +106,6 @@ class TransaksiResource extends Resource
                 ])
                 ->required(),
         ]);
-
     }
 
     public static function table(Table $table): Table
@@ -61,12 +114,12 @@ class TransaksiResource extends Resource
             ->columns([
                 TextColumn::make('kode_transaksi')->searchable(),
                 TextColumn::make('tanggal')->dateTime(),
+                TextColumn::make('pelanggan.nama')->label('Pelanggan'),
                 TextColumn::make('total_harga')->money('IDR'),
+                TextColumn::make('total_bayar')->money('IDR'),
+                TextColumn::make('kembalian')->money('IDR'),
                 TextColumn::make('metode_pembayaran'),
             ])
-            
-            ->filters([])
-
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])

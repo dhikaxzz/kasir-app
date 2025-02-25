@@ -42,13 +42,13 @@ class BarangResource extends Resource
                             ->unique(ignoreRecord: true)
                             ->required()
                             ->placeholder('Masukkan kode unik'),
-                        
+
                         TextInput::make('nama_barang')
                             ->label('Nama Barang')
                             ->required()
                             ->placeholder('Masukkan nama barang'),
                     ]),
-        
+
                     Grid::make(2)->schema([
                         Select::make('kategori')
                             ->label('Kategori Barang')
@@ -62,18 +62,18 @@ class BarangResource extends Resource
                                 'Perlengkapan Sekolah' => 'Perlengkapan Sekolah',
                             ])
                             ->required(),
-        
+
                         TextInput::make('merek')
                             ->label('Merek')
                             ->placeholder('Masukkan merek barang'),
                     ]),
-        
+
                     Textarea::make('deskripsi')
                         ->label('Deskripsi Barang')
                         ->placeholder('Tambahkan deskripsi barang')
                         ->maxLength(255),
                 ]),
-        
+
             Section::make('Detail & Harga')
                 ->description('Tambahkan informasi tambahan tentang barang.')
                 ->schema([
@@ -86,25 +86,30 @@ class BarangResource extends Resource
                                 'liter' => 'LITER',
                             ])
                             ->required(),
-        
+
                         TextInput::make('harga_jual')
                             ->label('Harga Jual')
                             ->prefix('Rp')
                             ->numeric()
                             ->required(),
                     ]),
-        
+
                     Grid::make(2)->schema([
                         DatePicker::make('tanggal_kadaluarsa')
                             ->label('Tanggal Kadaluarsa')
-                            ->required(),
+                            ->nullable(),
 
-                        TextInput::make('lokasi_barang')
-                            ->label('Lokasi Barang')
-                            ->placeholder('Misalnya: Rak A, Gudang, dll.'),
-        
+                        TextInput::make('stok')
+                            ->label('Stok Barang')
+                            ->numeric()
+                            ->default(0)
+                            ->required(),
                     ]),
-        
+
+                    TextInput::make('lokasi_barang')
+                        ->label('Lokasi Barang')
+                        ->placeholder('Misalnya: Rak A, Gudang, dll.'),
+
                     Select::make('status')
                         ->label('Status Barang')
                         ->options([
@@ -113,7 +118,8 @@ class BarangResource extends Resource
                         ])
                         ->required(),
                 ]),
-        ]);        
+        ]);
+        
     }
 
     public static function table(Table $table): Table
@@ -126,12 +132,16 @@ class BarangResource extends Resource
                 TextColumn::make('merek')->searchable(),
                 TextColumn::make('satuan'),
                 TextColumn::make('harga_jual')->money('IDR'),
+                TextColumn::make('stok')
+                    ->label('Stok')
+                    ->sortable()
+                    ->badge()
+                    ->color(fn ($state) => $state > 0 ? 'success' : 'danger'),
                 TextColumn::make('status')
                     ->badge()
-                    ->color(fn ($state) => $state === 'aktif' ? 'success' : 'danger')
+                    ->color(fn ($state) => $state === 'aktif' ? 'success' : 'danger'),
             ])
             ->filters([])
-
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),

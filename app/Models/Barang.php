@@ -21,6 +21,7 @@ class Barang extends Model
         'harga_jual',
         'lokasi_barang',
         'tanggal_kadaluarsa',
+        'stok',
         'status',
     ];
 

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('deskripsi')->nullable();
             $table->string('satuan'); // pcs, kg, liter, dll
             $table->decimal('harga_jual', 10, 2);
+            $table->integer('stok')->default(0); // Menyimpan jumlah stok barang
             $table->string('lokasi_barang')->nullable();
             $table->date('tanggal_kadaluarsa')->nullable();
             $table->enum('status', ['aktif', 'nonaktif'])->default('aktif');

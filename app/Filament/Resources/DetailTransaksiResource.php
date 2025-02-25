@@ -32,22 +32,9 @@ class DetailTransaksiResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('transaksi_id')
-                    ->relationship('transaksi', 'kode_transaksi')
-                    ->required()
-                    ->label('Kode Transaksi'),
-                Select::make('barang_id')
-                    ->relationship('barang', 'nama_barang')
-                    ->required()
-                    ->label('Nama Barang'),
-                TextInput::make('harga_satuan')
-                    ->numeric()
-                    ->required()
-                    ->label('Harga Satuan'),
-                TextInput::make('subtotal')
-                    ->numeric()
-                    ->required()
-                    ->label('Subtotal'),
+                TextInput::make('transaksi.kode_transaksi')->disabled(),
+                TextInput::make('barang.nama')->disabled(),
+                TextInput::make('harga_satuan')->disabled(),
             ]);
     }
 
@@ -55,11 +42,11 @@ class DetailTransaksiResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('transaksi.kode_transaksi')->label('Kode Transaksi')->searchable(),
-                TextColumn::make('barang.nama_barang')->label('Nama Barang')->searchable(),
-                TextColumn::make('harga_satuan')->money('IDR')->label('Harga Satuan'),
-                TextColumn::make('subtotal')->money('IDR')->label('Subtotal'),
+                TextColumn::make('transaksi.kode_transaksi')->label('Kode Transaksi')->sortable(),
+                TextColumn::make('barang.nama')->label('Nama Barang')->sortable(),
+                TextColumn::make('harga_satuan')->label('Harga')->money('IDR')->sortable(),
             ])
+            
             ->filters([])
             
             ->actions([

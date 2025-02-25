@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_transaksi')->unique();
-            $table->dateTime('tanggal');
-            $table->decimal('total_harga', 10, 2);
-            $table->decimal('total_bayar', 10, 2);
-            $table->enum('metode_pembayaran', ['cash', 'debit', 'qris']);
+            $table->string('kode_transaksi')->unique(); // Kode unik transaksi
+            $table->dateTime('tanggal')->default(now()); // Waktu transaksi
+            $table->decimal('total_harga', 15, 2); // Total harga transaksi
+            $table->decimal('total_bayar', 15, 2); // Total uang yang dibayar
+            $table->enum('metode_pembayaran', ['cash', 'debit', 'qris']); // Metode pembayaran
             $table->timestamps();
         });
     }

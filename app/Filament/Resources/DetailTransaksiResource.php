@@ -20,6 +20,12 @@ class DetailTransaksiResource extends Resource
 {
     protected static ?string $model = DetailTransaksi::class;
 
+    protected static ?string $navigationLabel = 'Detail Transaksi'; // Nama di sidebar
+
+    protected static ?string $navigationGroup = 'Transaksi';
+
+    protected static ?int $navigationSort = 2; // Urutan menu
+
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form

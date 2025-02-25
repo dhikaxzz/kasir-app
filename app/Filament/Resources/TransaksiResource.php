@@ -15,29 +15,44 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\DateTimePicker;
 
 class TransaksiResource extends Resource
 {
     protected static ?string $model = Transaksi::class;
+
+    protected static ?string $navigationLabel = 'Transaksi'; // Nama di sidebar
+    
+    protected static ?string $navigationGroup = 'Transaksi';
+
+    protected static ?int $navigationSort = 1; // Urutan menu
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                TextInput::make('kode_transaksi')->unique()->required(),
-                TextInput::make('tanggal')->dateTime()->default(now())->disabled(),
-                TextInput::make('total_harga')->numeric()->required(),
-                TextInput::make('total_bayar')->numeric()->required(),
-                Select::make('metode_pembayaran')
-                    ->options([
-                        'cash' => 'Cash',
-                        'debit' => 'Debit',
-                        'qris' => 'QRIS',
-                    ])
-                    ->required(),
-            ]);
+        ->schema([
+            TextInput::make('kode_transaksi')->unique(ignoreRecord: true)->required(),
+            
+            DateTimePicker::make('tanggal')
+                ->default(now())
+                ->label('Tanggal Transaksi')
+                ->disabled(),
+
+            TextInput::make('total_harga')->numeric()->required(),
+            TextInput::make('total_bayar')->numeric()->required(),
+
+            Select::make('metode_pembayaran')
+                ->options([
+                    'cash' => 'Cash',
+                    'debit' => 'Debit',
+                    'qris' => 'QRIS',
+                ])
+                ->required(),
+        ]);
+
     }
 
     public static function table(Table $table): Table

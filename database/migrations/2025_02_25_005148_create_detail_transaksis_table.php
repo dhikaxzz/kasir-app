@@ -14,10 +14,8 @@ return new class extends Migration
         Schema::create('detail_transaksis', function (Blueprint $table) {
             $table->id();
             $table->foreignId('transaksi_id')->constrained('transaksis')->onDelete('cascade'); // Relasi ke transaksi
-            $table->foreignId('barang_id')->constrained('barangs')->onDelete('cascade'); // Relasi ke barang
-            $table->integer('jumlah'); // Jumlah barang yang dibeli
-            $table->decimal('harga_satuan', 15, 2); // Harga per barang
-            $table->decimal('subtotal', 15, 2); // Harga total per barang (jumlah * harga_satuan)
+            $table->foreignId('barang_id')->constrained('barangs')->onDelete('cascade'); // Relasi ke barang unik
+            $table->decimal('harga_satuan', 15, 2); // Harga per barang (subtotal)
             $table->timestamps();
         });
     }

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('kode_transaksi')->unique(); // Kode unik transaksi
             $table->dateTime('tanggal')->default(now()); // Waktu transaksi
-            $table->decimal('total_harga', 15, 2); // Total harga transaksi
+            $table->decimal('total_harga', 15, 2); // Total harga semua barang
             $table->decimal('total_bayar', 15, 2); // Total uang yang dibayar
             $table->enum('metode_pembayaran', ['cash', 'debit', 'qris']); // Metode pembayaran
             $table->timestamps();

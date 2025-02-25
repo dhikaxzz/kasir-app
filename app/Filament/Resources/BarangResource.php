@@ -61,6 +61,7 @@ class BarangResource extends Resource
                 TextColumn::make('kode_barang')->searchable(),
                 TextColumn::make('nama_barang')->searchable(),
                 TextColumn::make('kategori'),
+                TextColumn::make('merek'),
                 TextColumn::make('harga_jual')->money('IDR'),
                 TextColumn::make('status')
                     ->badge()

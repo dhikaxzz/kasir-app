@@ -32,19 +32,34 @@ class DetailTransaksiResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('transaksi.kode_transaksi')->disabled(),
-                TextInput::make('barang.nama')->disabled(),
-                TextInput::make('harga_satuan')->disabled(),
+                Select::make('transaksi_id')
+                    ->relationship('transaksi', 'kode_transaksi')
+                    ->searchable()
+                    ->required(),
+
+                Select::make('barang_id')
+                    ->relationship('barang', 'nama')
+                    ->searchable()
+                    ->required(),
+
+                TextInput::make('jumlah')->numeric()->required(),
+
+                TextInput::make('harga_satuan')->numeric()->required(),
+
+                TextInput::make('subtotal')->numeric()->disabled(),
             ]);
+
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('transaksi.kode_transaksi')->label('Kode Transaksi')->sortable(),
-                TextColumn::make('barang.nama')->label('Nama Barang')->sortable(),
-                TextColumn::make('harga_satuan')->label('Harga')->money('IDR')->sortable(),
+                TextColumn::make('transaksi.kode_transaksi')->sortable(),
+                TextColumn::make('barang.nama')->sortable(),
+                TextColumn::make('jumlah')->sortable(),
+                TextColumn::make('harga_satuan')->money('IDR')->sortable(),
+                TextColumn::make('subtotal')->money('IDR')->sortable(),
             ])
             
             ->filters([])

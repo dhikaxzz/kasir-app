@@ -21,6 +21,16 @@ class Transaksi extends Model
         'metode_pembayaran',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($transaksi) {
+            $transaksi->total_harga = $transaksi->hitungTotalHarga();
+        });
+    }
+
+
     public function detailTransaksi()
     {
         return $this->hasMany(DetailTransaksi::class);
@@ -29,5 +39,10 @@ class Transaksi extends Model
     public function pelanggan()
     {
         return $this->belongsTo(Pelanggan::class);
+    }
+
+    public function hitungTotalHarga()
+    {
+        return $this->detailTransaksi->sum(fn($detail) => $detail->subtotal);
     }
 }

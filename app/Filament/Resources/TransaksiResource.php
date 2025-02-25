@@ -37,12 +37,62 @@ class TransaksiResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                TextInput::make('kode_transaksi')->disabled(),
-                TextInput::make('total_harga')->disabled(),
-                TextInput::make('total_bayar')->disabled(),
-                TextInput::make('metode_pembayaran')->disabled(),
-            ]);
+        ->schema([
+            TextInput::make('kode_transaksi')->disabled(),
+
+            Select::make('pelanggan_id')
+                ->relationship('pelanggan', 'nama')
+                ->searchable()
+                ->required(),
+
+            DateTimePicker::make('tanggal')->default(now()),
+
+            Repeater::make('detailTransaksi')
+                ->relationship('detailTransaksi')
+                ->schema([
+                    Select::make('barang_id')
+                        ->relationship('barang', 'nama')
+                        ->searchable()
+                        ->required()
+                        ->reactive()
+                        ->afterStateUpdated(fn ($state, callable $set) => 
+                            $set('harga_satuan', \App\Models\Barang::find($state)?->harga ?? 0)
+                        ),
+
+                    TextInput::make('jumlah')
+                        ->numeric()
+                        ->required()
+                        ->reactive()
+                        ->afterStateUpdated(fn ($state, callable $set, callable $get) => 
+                            $set('subtotal', ($get('harga_satuan') ?? 0) * ($state ?? 0))
+                        ),
+
+                    TextInput::make('harga_satuan')->numeric()->disabled(),
+
+                    TextInput::make('subtotal')->numeric()->disabled(),
+                ])
+                ->columns(4),
+
+            TextInput::make('total_harga')->disabled(),
+
+            Select::make('metode_pembayaran')
+                ->options([
+                    'cash' => 'Cash',
+                    'debit' => 'Debit',
+                    'qris' => 'QRIS'
+                ])
+                ->required(),
+
+            TextInput::make('total_bayar')
+                ->numeric()
+                ->required()
+                ->reactive()
+                ->afterStateUpdated(fn ($state, callable $set, callable $get) => 
+                    $set('kembalian', ($state ?? 0) - ($get('total_harga') ?? 0))
+                ),
+
+            TextInput::make('kembalian')->disabled(),
+        ]);
     }
 
     public static function table(Table $table): Table

@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
+            $table->string('kode_transaksi')->unique();
+            $table->dateTime('tanggal');
+            $table->decimal('total_harga', 10, 2);
+            $table->decimal('total_bayar', 10, 2);
+            $table->enum('metode_pembayaran', ['cash', 'debit', 'qris']);
             $table->timestamps();
         });
     }

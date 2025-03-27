@@ -17,14 +17,15 @@ use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
+use App\Models\Pembeli;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Filters\SelectFilter;
 
 class PelangganResource extends Resource
 {
     protected static ?string $model = Pelanggan::class;
 
-    protected static ?string $navigationGroup = 'Manajemen';
-
-    protected static ?string $navigationLabel = 'Kelola Pelanggan'; // Nama di sidebar
+    protected static ?string $navigationLabel = 'Manajemen Pelanggan'; // Nama di sidebar
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -58,6 +59,10 @@ class PelangganResource extends Resource
                         TextInput::make('alamat')
                             ->label('Alamat')
                             ->placeholder('Masukkan alamat pelanggan'),
+                            
+                        Select::make('member')
+                            ->options([true => 'Ya', false => 'Tidak'])
+                            ->required(),
                     ]),
                 ]),
         ]);

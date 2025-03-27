@@ -41,6 +41,10 @@ class BarangResource extends Resource
                     ->unique()
                     ->required(),
                 TextInput::make('nama_barang')->required(),
+                Select::make('kategori_id') // ✅ Ubah dari 'kategoris_id' ke 'kategori_id'
+                    ->label('Kategori')
+                    ->relationship('kategori', 'nama') // ✅ Sesuai dengan relasi di model Barang
+                    ->required(),
                 TextInput::make('merek'),
                 TextInput::make('varian'),
                 TextInput::make('harga_jual')->required()->numeric(),

@@ -27,4 +27,9 @@ class Barang extends Model
     {
         return $this->hasMany(DetailTransaksi::class);
     }
+
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class, 'kategori_id'); // ✅ Tambah relasi ke kategori
+    }
 }

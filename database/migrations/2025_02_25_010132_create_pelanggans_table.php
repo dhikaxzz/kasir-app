@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('pelanggans', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('no_telpon')->nullable();
             $table->string('email')->nullable()->unique();
+            $table->string('no_telpon')->nullable();
             $table->text('alamat')->nullable();
+            $table->boolean('member')->default(false);
             $table->timestamps();
         });
     }

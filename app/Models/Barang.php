@@ -14,15 +14,13 @@ class Barang extends Model
     protected $fillable = [
         'kode_barang',
         'nama_barang',
-        'kategori',
         'merek',
-        'deskripsi',
+        'varian',
+        'lokasi_rak',
         'satuan',
         'harga_jual',
-        'lokasi_barang',
-        'tanggal_kadaluarsa',
         'stok',
-        'status',
+        'expired_date',
     ];
 
     public function detailTransaksi()

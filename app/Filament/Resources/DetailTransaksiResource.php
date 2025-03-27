@@ -38,7 +38,7 @@ class DetailTransaksiResource extends Resource
                     ->required(),
 
                 Select::make('barang_id')
-                    ->relationship('barang', 'nama')
+                    ->relationship('barang', 'nama_barang')
                     ->searchable()
                     ->required(),
 
@@ -56,7 +56,7 @@ class DetailTransaksiResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('transaksi.kode_transaksi')->sortable(),
-                TextColumn::make('barang.nama')->sortable(),
+                TextColumn::make('barang.nama_barang')->sortable(),
                 TextColumn::make('jumlah')->sortable(),
                 TextColumn::make('harga_satuan')->money('IDR')->sortable(),
                 TextColumn::make('subtotal')->money('IDR')->sortable(),

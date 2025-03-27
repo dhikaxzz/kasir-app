@@ -15,15 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('kode_barang')->unique();
             $table->string('nama_barang');
-            $table->string('kategori')->nullable();
-            $table->string('merek')->nullable();
-            $table->text('deskripsi')->nullable();
-            $table->string('satuan'); // pcs, kg, liter, dll
-            $table->decimal('harga_jual', 10, 2);
-            $table->integer('stok')->default(0); // Menyimpan jumlah stok barang
-            $table->string('lokasi_barang')->nullable();
-            $table->date('tanggal_kadaluarsa')->nullable();
-            $table->enum('status', ['aktif', 'nonaktif'])->default('aktif');
+            $table->integer('stok')->default(0);
+            $table->decimal('harga_jual', 15, 2);
             $table->timestamps();
         });
     }

@@ -28,4 +28,33 @@ class DetailTransaksi extends Model
     {
         return $this->belongsTo(Barang::class);
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($detail) {
+            $barang = Barang::find($detail->barang_id);
+            if (!$barang || $barang->stok < $detail->jumlah) {
+                throw new \Exception("Stok tidak cukup untuk barang {$barang->nama_barang}");
+            }
+    
+            $detail->harga_satuan = $barang->harga_jual; // Pastikan harga satuan diambil dari barang
+            $detail->subtotal = $detail->harga_satuan * $detail->jumlah;
+    
+            $barang->stok -= $detail->jumlah;
+            $barang->save();
+        });
+
+        static::deleting(function ($detail) {
+            $barang = Barang::find($detail->barang_id);
+            if ($barang) {
+                $barang->stok += $detail->jumlah;
+                $barang->save();
+            }
+        });
+    }
+
+
+
 }

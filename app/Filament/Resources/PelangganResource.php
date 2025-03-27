@@ -25,6 +25,8 @@ class PelangganResource extends Resource
 {
     protected static ?string $model = Pelanggan::class;
 
+    protected static ?string $navigationGroup = 'Manajemen';
+
     protected static ?string $navigationLabel = 'Manajemen Pelanggan'; // Nama di sidebar
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

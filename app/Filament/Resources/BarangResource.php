@@ -27,7 +27,7 @@ class BarangResource extends Resource
 {
     protected static ?string $model = Barang::class;
 
-    protected static ?string $navigationGroup = 'Transaksi';
+    protected static ?string $navigationGroup = 'Manajemen';
 
     protected static ?string $navigationLabel = 'Manajemen Barang'; // Nama di sidebar
 

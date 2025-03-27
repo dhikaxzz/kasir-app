@@ -40,16 +40,23 @@ class BarangResource extends Resource
                     ->label('Kode Barang')
                     ->unique(ignoreRecord: true) // ✅ Agar saat edit tidak error
                     ->required(),
-                TextInput::make('nama_barang')->required(),
+                TextInput::make('nama_barang')
+                    ->required(),
                 TextInput::make('merek'),
                 TextInput::make('varian'),
-                TextInput::make('harga_jual')->required()->numeric(),
+                Select::make('kategori_id') // ✅ Tambah kategori
+                    ->label('Kategori')
+                    ->relationship('kategori', 'nama') // Ambil data dari tabel kategoris
+                    ->preload()
+                    ->required(),
+                TextInput::make('harga_jual')
+                    ->required()
+                    ->numeric(),
                 Select::make('satuan')
                     ->options(['pcs' => 'PCS', 'kg' => 'Kg', 'liter' => 'Liter'])
                     ->required(),
                 TextInput::make('stok')->required()->numeric(),
-                TextInput::make('lokasi_rak')
-                ->label('Lokasi Rak'),
+                TextInput::make('lokasi_rak')->label('Lokasi Rak'),
                 DatePicker::make('expired_date')->nullable(),
         ]);
 

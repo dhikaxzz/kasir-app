@@ -13,6 +13,13 @@ class ListBarangs extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
+            Actions\Action::make('scanQr')
+            ->label('Scan QR')
+            ->icon('heroicon-o-camera')
+            ->action(fn () => null)
+            ->modalHeading('Scan QR Kode Barang')
+            ->modalSubmitAction(false)
+            ->modalContent(view('scan-barang')),
             Actions\CreateAction::make(),
         ];
     }

@@ -41,33 +41,38 @@ class PelangganResource extends Resource
                         TextInput::make('nama')
                             ->label('Nama Pelanggan')
                             ->required()
-                            ->placeholder('Masukkan nama pelanggan'),
-
+                            ->placeholder('Masukkan nama pelanggan')
+                            ->prefixIcon('heroicon-m-user'),
+        
                         TextInput::make('no_telpon')
                             ->label('No. Telepon')
                             ->tel()
                             ->required()
                             ->placeholder('Masukkan nomor telepon')
-                            ->unique(ignoreRecord: true),
+                            ->unique(ignoreRecord: true)
+                            ->prefixIcon('heroicon-m-phone'),
                     ]),
-
+        
                     Grid::make(1)->schema([
                         TextInput::make('email')
                             ->label('Email')
                             ->email()
                             ->placeholder('Masukkan email pelanggan')
-                            ->unique(ignoreRecord: true),
-                        
+                            ->unique(ignoreRecord: true)
+                            ->prefixIcon('heroicon-m-envelope'),
+        
                         TextInput::make('alamat')
                             ->label('Alamat')
-                            ->placeholder('Masukkan alamat pelanggan'),
-                            
+                            ->placeholder('Masukkan alamat pelanggan')
+                            ->prefixIcon('heroicon-m-map'),
+        
                         Select::make('member')
                             ->options([true => 'Ya', false => 'Tidak'])
-                            ->required(),
+                            ->required()
+                            ->prefixIcon('heroicon-m-check-circle'),
                     ]),
                 ]),
-        ]);
+        ]);        
     }
 
     public static function table(Table $table): Table

@@ -57,7 +57,7 @@ class BarangResource extends Resource
 
                     TextInput::make('varian')
                         ->label('Varian')
-                        ->prefixIcon('heroicon-o-archive-box')
+                        ->prefixIcon('heroicon-o-bars-3-bottom-left')
                         ->placeholder('Contoh: Active Fresh, Cool Booster'),
 
                     Select::make('kategori_id')
@@ -96,7 +96,7 @@ class BarangResource extends Resource
 
                     TextInput::make('stok')
                         ->label('Stok')
-                        ->prefixIcon('heroicon-o-archive-box')
+                        ->prefixIcon('heroicon-o-square-3-stack-3d')
                         ->numeric()
                         ->required(),
                 ]),

@@ -150,7 +150,9 @@ class BarangResource extends Resource
                     ->sortable()
                     ->badge()
                     ->color(fn ($state) => $state > 0 ? 'success' : 'danger'),
-                TextColumn::make('expired_date')->date(),
+                TextColumn::make('expired_date')
+                ->date()
+                ->color(fn ($state) => \Carbon\Carbon::parse($state)->isPast() ? 'danger' : ''),
             ])
             ->filters([
                 SelectFilter::make('kategori_id')

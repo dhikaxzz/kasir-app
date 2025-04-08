@@ -36,8 +36,6 @@ class TransaksiResource extends Resource
 
     protected static ?string $navigationLabel = 'Transaksi'; // Nama di sidebar
     
-    protected static ?string $navigationGroup = 'Transaksi';
-
     protected static ?int $navigationSort = 1; // Urutan menu
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';

@@ -26,7 +26,7 @@ class BarangResource extends Resource
 
     protected static ?string $navigationGroup = 'Manajemen';
 
-    protected static ?string $navigationLabel = 'Manajemen Barang';
+    protected static ?string $navigationLabel = 'Kelola Barang';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 

@@ -45,79 +45,92 @@ class TransaksiResource extends Resource
         return $form->schema([
             Forms\Components\TextInput::make('kode_transaksi')
                 ->default(fn () => 'TRX-' . now()->timestamp)
-                ->disabled(),
-
+                ->disabled()
+                ->prefixIcon('heroicon-m-identification'),
+        
             Forms\Components\DateTimePicker::make('tanggal')
                 ->default(now())
-                ->disabled(),
-
-                Forms\Components\Repeater::make('detailTransaksi')
-                    ->relationship('detailTransaksi')
-                    ->schema([
-                        Forms\Components\Select::make('barang_id')
-                            ->relationship('barang', 'nama_barang')
-                            ->searchable()
-                            ->required()
-                            ->reactive()
-                            ->afterStateUpdated(fn ($state, callable $set) =>
-                                $set('harga_satuan', Barang::find($state)?->harga_jual ?? 0)
-                            ),
-                
-                        Forms\Components\TextInput::make('jumlah')
-                            ->numeric()
-                            ->required()
-                            ->reactive()
-                            ->afterStateUpdated(fn ($state, callable $set, callable $get) =>
-                                $set('subtotal', ($get('harga_satuan') ?? 0) * ($state ?? 1))
-                            ),
-                
-                        Forms\Components\TextInput::make('harga_satuan')->numeric()->disabled()->dehydrated(),
-                
-                        Forms\Components\TextInput::make('subtotal')->numeric()->disabled()->dehydrated(),
-                    ])
-                    ->columns(4)
-                    ->dehydrated()
-                    ->live() // UPDATE otomatis tanpa harus klik "Add Detail"
-                    ->afterStateUpdated(fn (callable $set, callable $get) =>
-                        $set('total_harga', collect($get('detailTransaksi'))->sum('subtotal'))
-                    ),
-
+                ->disabled()
+                ->prefixIcon('heroicon-m-calendar-days'),
+        
+            Forms\Components\Repeater::make('detailTransaksi')
+                ->relationship('detailTransaksi')
+                ->schema([
+                    Forms\Components\Select::make('barang_id')
+                        ->relationship('barang', 'nama_barang')
+                        ->searchable()
+                        ->required()
+                        ->reactive()
+                        ->afterStateUpdated(fn ($state, callable $set) =>
+                            $set('harga_satuan', \App\Models\Barang::find($state)?->harga_jual ?? 0)
+                        ),
+        
+                    Forms\Components\TextInput::make('jumlah')
+                        ->numeric()
+                        ->required()
+                        ->reactive()
+                        ->afterStateUpdated(fn ($state, callable $set, callable $get) =>
+                            $set('subtotal', ($get('harga_satuan') ?? 0) * ($state ?? 1))
+                        ),
+        
+                    Forms\Components\TextInput::make('harga_satuan')
+                        ->numeric()
+                        ->disabled()
+                        ->dehydrated(),
+                                
+                    Forms\Components\TextInput::make('subtotal')
+                        ->numeric()
+                        ->disabled()
+                        ->dehydrated(),
+                ])
+                ->columns(4)
+                ->dehydrated()
+                ->live()
+                ->afterStateUpdated(fn (callable $set, callable $get) =>
+                    $set('total_harga', collect($get('detailTransaksi'))->sum('subtotal'))
+                ),
+        
             Forms\Components\TextInput::make('total_harga')
                 ->numeric()
-                ->disabled(),
-
-                
+                ->disabled()
+                ->prefixIcon('heroicon-m-banknotes'),
+        
             Forms\Components\Select::make('pelanggan_id')
-            ->label('Pelanggan')
-            ->relationship('pelanggan', 'nama') // ambil dari model Pelanggan field nama
-            ->searchable()
-            ->preload()
-            ->required(),
-
+                ->label('Pelanggan')
+                ->relationship('pelanggan', 'nama')
+                ->searchable()
+                ->preload()
+                ->required()
+                ->prefixIcon('heroicon-m-user'),
+        
             Forms\Components\Select::make('metode_pembayaran')
                 ->options([
                     'cash' => 'Cash',
                     'debit' => 'Debit',
                     'qris' => 'QRIS'
                 ])
-                ->required(),
-
+                ->required()
+                ->prefixIcon('heroicon-m-credit-card'),
+        
             Forms\Components\TextInput::make('total_bayar')
                 ->numeric()
                 ->required()
                 ->reactive()
-                ->minValue(fn (callable $get) => $get('total_harga')) // Bayar harus cukup
-                ->debounce(500) // Cegah perhitungan terlalu sering
+                ->minValue(fn (callable $get) => $get('total_harga'))
+                ->debounce(500)
+                ->prefixIcon('heroicon-m-wallet')
                 ->afterStateUpdated(fn ($state, callable $set, callable $get) =>
                     $set('kembalian', max(0, ($state ?? 0) - ($get('total_harga') ?? 0)))
                 ),
-
+        
             Forms\Components\TextInput::make('kembalian')
                 ->numeric()
                 ->disabled()
                 ->required()
-                ->default(0),
+                ->default(0)
+                ->prefixIcon('heroicon-m-arrow-uturn-left'),
         ]);
+        
 
     }
 

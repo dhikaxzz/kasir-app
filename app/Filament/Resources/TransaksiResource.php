@@ -88,6 +88,14 @@ class TransaksiResource extends Resource
                 ->numeric()
                 ->disabled(),
 
+                
+            Forms\Components\Select::make('pelanggan_id')
+            ->label('Pelanggan')
+            ->relationship('pelanggan', 'nama') // ambil dari model Pelanggan field nama
+            ->searchable()
+            ->preload()
+            ->required(),
+
             Forms\Components\Select::make('metode_pembayaran')
                 ->options([
                     'cash' => 'Cash',
@@ -120,6 +128,7 @@ class TransaksiResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('kode_transaksi')->searchable(),
+                TextColumn::make('pelanggan.nama')->label('Pelanggan')->searchable()->sortable(),
                 TextColumn::make('tanggal')->dateTime()->sortable(),
                 TextColumn::make('total_harga')->money('IDR')->sortable(),
                 TextColumn::make('total_bayar')->money('IDR')->sortable(),

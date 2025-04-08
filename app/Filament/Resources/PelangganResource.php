@@ -79,10 +79,10 @@ class PelangganResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('nama')->searchable()->label('Nama Pelanggan'),
-                TextColumn::make('no_telpon')->label('No. Telepon')->searchable(),
-                TextColumn::make('email')->label('Email')->searchable(),
-                TextColumn::make('alamat')->searchable()->label('Alamat')->limit(50),
+                TextColumn::make('nama')->searchable()->label('Nama Pelanggan')->sortable(),
+                TextColumn::make('no_telpon')->label('No. Telepon')->searchable()->sortable(),
+                TextColumn::make('email')->label('Email')->searchable()->sortable(),
+                TextColumn::make('alamat')->searchable()->label('Alamat')->limit(50)->sortable(),
             ])
             ->filters([])
 

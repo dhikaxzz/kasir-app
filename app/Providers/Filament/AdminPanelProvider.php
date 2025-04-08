@@ -35,7 +35,6 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->brandName('FastKas Dhika') // Bisa diganti jadi "Admin Panel" atau "Kasir Panel"
-            ->registration()
             ->resources([
                 UserResource::class, // Tambahkan ini
             ])

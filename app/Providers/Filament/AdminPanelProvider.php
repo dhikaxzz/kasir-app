@@ -2,30 +2,31 @@
 
 namespace App\Providers\Filament;
 
-use Filament\Pages;
 use Filament\Panel;
+use Filament\Pages;
 use Filament\Widgets;
-use Filament\PanelProvider;
 use Filament\Facades\Filament;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Filament\Support\Assets\Js;
+use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\Support\Assets\Js;
 use Illuminate\Support\Facades\View;
-use App\Filament\Widgets\OverviewStats;
-use App\Filament\Resources\UserResource;
-use Filament\Http\Middleware\Authenticate;
-use App\Filament\Widgets\TopPelangganChart;
-use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
-use Filament\Http\Middleware\AuthenticateSession;
-use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\Http\Middleware\Authenticate;
+use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
-use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
+use Filament\Support\Facades\FilamentAsset;
+
+use App\Filament\Resources\UserResource;
+use App\Filament\Widgets\TopPelangganChart;
+use App\Filament\Widgets\OverviewStats;
+
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -36,9 +37,9 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->brandName('FastKas Dhika') // Bisa diganti jadi "Admin Panel" atau "Kasir Panel"
+            ->brandName('FastKas Dhika')
             ->resources([
-                UserResource::class, // Tambahkan ini
+                UserResource::class,
             ])
             ->colors([
                 'primary' => Color::Emerald,
@@ -68,6 +69,9 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->plugins([
+                FilamentShieldPlugin::make(),
             ]);
     }
 

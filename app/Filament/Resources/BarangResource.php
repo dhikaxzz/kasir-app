@@ -168,6 +168,14 @@ class BarangResource extends Resource
                 SelectFilter::make('kategori_id')
                     ->label('Kategori')
                     ->relationship('kategori', 'nama'),
+            
+                SelectFilter::make('satuan')
+                    ->label('Satuan')
+                    ->options([
+                        'pcs' => 'PCS',
+                        'kg' => 'Kg',
+                        'liter' => 'Liter',
+                    ]),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

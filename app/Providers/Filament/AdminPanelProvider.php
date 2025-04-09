@@ -24,6 +24,7 @@ use Filament\Support\Assets\Js;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\View;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
+use App\Filament\Widgets\TopPelangganChart;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -50,6 +51,7 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
+                TopPelangganChart::class,
             ])
             ->middleware([
                 EncryptCookies::class,

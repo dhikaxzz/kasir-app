@@ -38,6 +38,25 @@ class OverviewStats extends BaseWidget
                 ->description('Barang dengan stok < 5 unit')
                 ->icon('heroicon-o-exclamation-circle')
                 ->color('danger'),
+
+            Stat::make('Rata-rata Transaksi / Hari', function () {
+                $totalTransaksi = Transaksi::count();
+    
+                $firstDate = Transaksi::min('tanggal');
+                $lastDate = Transaksi::max('tanggal');
+    
+                if (!$firstDate || !$lastDate) {
+                    return '0';
+                }
+    
+                $days = Carbon::parse($firstDate)->diffInDays(Carbon::parse($lastDate)) + 1;
+                $average = $days > 0 ? $totalTransaksi / $days : $totalTransaksi;
+    
+                return number_format($average, 2);
+            })
+                ->description('Rata-rata transaksi per hari sejak transaksi pertama')
+                ->icon('heroicon-o-chart-bar')
+                ->color('warning'),
         ];
     }
 }

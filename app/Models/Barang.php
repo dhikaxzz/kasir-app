@@ -22,6 +22,7 @@ class Barang extends Model
         'harga_jual',
         'stok',
         'expired_date',
+        'gambar',
     ];
 
     public function detailTransaksi()

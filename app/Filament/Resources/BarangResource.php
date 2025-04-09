@@ -14,6 +14,7 @@ use Filament\Forms\Components\Section;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\BarangResource\Pages;
@@ -79,6 +80,15 @@ class BarangResource extends Resource
                             'liter' => 'Liter',
                         ])
                         ->required(),
+                        
+                    FileUpload::make('gambar')
+                        ->label('Gambar Barang')
+                        ->image()
+                        ->directory('barang') // Akan disimpan di storage/app/public/barang
+                        ->imageEditor()
+                        ->previewable(true)
+                        ->downloadable()
+                        ->nullable(),
                 ]),
             ])
             ->columns(1)

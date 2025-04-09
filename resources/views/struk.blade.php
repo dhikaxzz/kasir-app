@@ -67,7 +67,6 @@
 
     <p><span class="bold">Tanggal</span>: {{ $transaksi->tanggal }}</p>
     <p><span class="bold">Pelanggan</span>: {{ $transaksi->pelanggan->nama ?? '-' }}</p>
-    <p><span class="bold">No. HP</span>: {{ $transaksi->pelanggan->no_hp ?? '-' }}</p>
     <p><span class="bold">Metode</span>: {{ ucfirst($transaksi->metode_pembayaran) }}</p>
 
     <div class="line"></div>
@@ -95,5 +94,10 @@
     <div class="line"></div>
 
     <p class="text-center thanks">Terima Kasih telah berbelanja di FastKas!</p>
+
+    <div class="text-center" style="margin-top: 10px;">
+        <img src="data:image/svg+xml;base64,{{ $qrCode }}" width="100" alt="QR Code">
+    </div>
+        
 </body>
 </html>

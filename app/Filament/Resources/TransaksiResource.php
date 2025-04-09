@@ -29,6 +29,7 @@ use Filament\Forms\Components\DateTimePicker;
 use App\Filament\Resources\TransaksiResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\TransaksiResource\RelationManagers;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 
 class TransaksiResource extends Resource
@@ -192,16 +193,25 @@ class TransaksiResource extends Resource
     {
         $transaksi = Transaksi::with('detailTransaksi.barang', 'pelanggan')->findOrFail($record->id);
 
+        // Generate QR Code format SVG (tidak butuh imagick)
+        $qrCode = base64_encode(
+            QrCode::format('svg') // pakai svg, bukan png
+                ->size(150)
+                ->generate($transaksi->kode_transaksi)
+        );
+
         // Render Blade ke HTML
-        $html = View::make('struk', compact('transaksi'))->render();
+        $html = View::make('struk', compact('transaksi', 'qrCode'))->render();
 
         // Generate PDF
         $pdf = Pdf::loadHTML($html);
 
-        // Download atau Stream PDF
-        return response()->streamDownload(fn () => print($pdf->output()), "Struk_{$transaksi->kode_transaksi}.pdf");
+        // Stream PDF
+        return response()->streamDownload(
+            fn () => print($pdf->output()),
+            "Struk_{$transaksi->kode_transaksi}.pdf"
+        );
     }
-
     
     public static function getPages(): array
     {

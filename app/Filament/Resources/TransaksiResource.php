@@ -2,32 +2,33 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\TransaksiResource\Pages;
-use App\Filament\Resources\TransaksiResource\RelationManagers;
-use App\Models\Transaksi;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Repeater;
-use Filament\Tables\Columns;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Actions\DeleteAction;
-use App\Models\DetailTransaksi;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-use Filament\Tables\Actions\Action;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\View;
 use App\Models\Barang;
+use Filament\Forms\Form;
+use App\Models\Transaksi;
+use Filament\Tables\Table;
+use Illuminate\Support\Str;
+use Filament\Tables\Columns;
+use App\Models\DetailTransaksi;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Filament\Resources\Resource;
+use Illuminate\Support\Facades\DB;
+use Filament\Tables\Actions\Action;
+use Illuminate\Support\Facades\View;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Repeater;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
+use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Actions\DeleteAction;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\DateTimePicker;
+use App\Filament\Resources\TransaksiResource\Pages;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\TransaksiResource\RelationManagers;
 
 
 class TransaksiResource extends Resource
@@ -61,6 +62,9 @@ class TransaksiResource extends Resource
                         ->searchable()
                         ->required()
                         ->reactive()
+                        ->options(
+                            \App\Models\Barang::where('stok', '>', 0)->pluck('nama_barang', 'id')
+                        )
                         ->afterStateUpdated(fn ($state, callable $set) =>
                             $set('harga_satuan', \App\Models\Barang::find($state)?->harga_jual ?? 0)
                         ),
@@ -69,9 +73,23 @@ class TransaksiResource extends Resource
                         ->numeric()
                         ->required()
                         ->reactive()
-                        ->afterStateUpdated(fn ($state, callable $set, callable $get) =>
-                            $set('subtotal', ($get('harga_satuan') ?? 0) * ($state ?? 1))
-                        ),
+                        ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                            $barangId = $get('barang_id');
+                            $barang = \App\Models\Barang::find($barangId);
+                    
+                            if ($barang && $state > $barang->stok) {
+                                Notification::make()
+                                    ->title('Stok tidak mencukupi')
+                                    ->body("Stok tersedia hanya {$barang->stok}")
+                                    ->danger()
+                                    ->send();
+                    
+                                // Reset jumlah jadi stok maksimal
+                                $set('jumlah', $barang->stok);
+                            }
+                    
+                            $set('subtotal', ($get('harga_satuan') ?? 0) * ($state ?? 1));
+                        }),
         
                     Forms\Components\TextInput::make('harga_satuan')
                         ->numeric()

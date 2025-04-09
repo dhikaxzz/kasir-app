@@ -4,7 +4,6 @@ namespace App\Filament\Widgets;
 
 use Filament\Widgets\ChartWidget;
 use App\Models\Transaksi;
-use Illuminate\Support\Facades\DB;
 
 class TopPelangganChart extends ChartWidget
 {
@@ -16,7 +15,7 @@ class TopPelangganChart extends ChartWidget
         $data = Transaksi::selectRaw('pelanggan_id, COUNT(*) as jumlah_transaksi')
             ->groupBy('pelanggan_id')
             ->orderByDesc('jumlah_transaksi')
-            ->with('pelanggan') // agar bisa ambil nama
+            ->with('pelanggan')
             ->take(5)
             ->get();
 
@@ -25,6 +24,14 @@ class TopPelangganChart extends ChartWidget
                 [
                     'label' => 'Jumlah Transaksi',
                     'data' => $data->pluck('jumlah_transaksi'),
+                    'backgroundColor' => [
+                        '#16a34a', // Green
+                        '#3b82f6', // Blue
+                        '#f97316', // Orange
+                        '#e11d48', // Rose
+                        '#8b5cf6', // Violet
+                    ],
+                    'borderRadius' => 10,
                 ],
             ],
             'labels' => $data->map(fn ($item) => $item->pelanggan?->nama ?? 'Tidak diketahui'),
@@ -34,5 +41,10 @@ class TopPelangganChart extends ChartWidget
     protected function getType(): string
     {
         return 'bar';
+    }
+
+    protected function getHeight(): ?int
+    {
+        return 360;
     }
 }

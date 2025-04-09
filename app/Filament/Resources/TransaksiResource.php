@@ -30,6 +30,7 @@ use App\Filament\Resources\TransaksiResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\TransaksiResource\RelationManagers;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Filament\Forms\Components\Button;
 
 
 class TransaksiResource extends Resource

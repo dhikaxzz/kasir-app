@@ -172,7 +172,7 @@ class TransaksiResource extends Resource
 
     public static function generatePDF($record)
     {
-        $transaksi = Transaksi::with('detailTransaksi.barang')->findOrFail($record->id);
+        $transaksi = Transaksi::with('detailTransaksi.barang', 'pelanggan')->findOrFail($record->id);
 
         // Render Blade ke HTML
         $html = View::make('struk', compact('transaksi'))->render();

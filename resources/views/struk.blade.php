@@ -2,59 +2,98 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Struk Transaksi</title>
     <style>
-        @page { size: auto; margin: 20px; }
-        body { font-family: Arial, sans-serif; font-size: 12px; padding: 20px; }
+        @page { size: auto; margin: 0; }
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
+            width: 270px;
+            margin: 0 auto;
+            padding: 10px;
+            color: #333;
+        }
+
         .text-center { text-align: center; }
+        .text-right { text-align: right; }
+        .text-left { text-align: left; }
         .bold { font-weight: bold; }
-        .uppercase { text-transform: uppercase; }
-        .w-full { width: 100%; }
-        .border { border: 1px solid black; border-collapse: collapse; }
-        .border th, .border td { border: 1px solid black; padding: 8px; }
-        .mt-2 { margin-top: 10px; }
-        .mt-4 { margin-top: 20px; }
-        .text-left { text-align: left; }
-        .text-left { text-align: left; }
+        .line { border-top: 1px dashed #000; margin: 8px 0; }
+
+        .brand {
+            font-size: 16px;
+            font-weight: bold;
+            color: #00B894;
+        }
+
+        .kode-transaksi {
+            font-size: 11px;
+            color: #888;
+        }
+
+        .detail-item {
+            margin-bottom: 6px;
+        }
+
+        .footer-total {
+            margin-top: 10px;
+        }
+
+        .footer-total p {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .thanks {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #00B894;
+        }
+
+        .highlight {
+            color: #00B894;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <div class="text-center bold uppercase">
-        <p>STRUK TRANSAKSI</p>
-        <p>#{{ $transaksi->kode_transaksi }}</p>
+
+    <div class="text-center">
+        <div class="brand">FastKas Dhika</div>
+        <div class="kode-transaksi">#{{ $transaksi->kode_transaksi }}</div>
     </div>
 
-    <p><span class="bold">Tanggal:</span> {{ $transaksi->tanggal }}</p>
-    <p><span class="bold">Metode Pembayaran:</span> {{ ucfirst($transaksi->metode_pembayaran) }}</p>
+    <div class="line"></div>
 
-    <table class="w-full border mt-2">
-        <thead>
-            <tr class="bold text-center">
-                <th>Barang</th>
-                <th>Harga Satuan</th>
-                <th>Jumlah</th>
-                <th>Subtotal</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($transaksi->detailTransaksi as $detail)
-                <tr>
-                    <td class="text-left">{{ $detail->barang->nama_barang }}</td>
-                    <td class="text-right">Rp{{ number_format($detail->harga_satuan, 0, ',', '.') }}</td>
-                    <td class="text-center">{{ $detail->jumlah }}</td>
-                    <td class="text-right">Rp{{ number_format($detail->subtotal, 0, ',', '.') }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+    <p><span class="bold">Tanggal</span>: {{ $transaksi->tanggal }}</p>
+    <p><span class="bold">Pelanggan</span>: {{ $transaksi->pelanggan->nama ?? '-' }}</p>
+    <p><span class="bold">No. HP</span>: {{ $transaksi->pelanggan->no_hp ?? '-' }}</p>
+    <p><span class="bold">Metode</span>: {{ ucfirst($transaksi->metode_pembayaran) }}</p>
 
-    <div class="mt-4 text-left">
-        <p class="bold">Total Harga: Rp{{ number_format($transaksi->total_harga, 0, ',', '.') }}</p>
-        <p class="bold">Total Bayar: Rp{{ number_format($transaksi->total_bayar, 0, ',', '.') }}</p>
-        <p class="bold">Kembalian: Rp{{ number_format($transaksi->kembalian, 0, ',', '.') }}</p>
+    <div class="line"></div>
+
+    @foreach($transaksi->detailTransaksi as $detail)
+        <div class="detail-item">
+            <div class="text-left bold">{{ $detail->barang->nama_barang }}</div>
+            <div class="text-left">
+                {{ $detail->jumlah }} x Rp{{ number_format($detail->harga_satuan, 0, ',', '.') }}
+            </div>
+            <div class="text-right highlight">
+                Rp{{ number_format($detail->subtotal, 0, ',', '.') }}
+            </div>
+        </div>
+    @endforeach
+
+    <div class="line"></div>
+
+    <div class="footer-total">
+        <p><span class="bold">Total</span> <span class="bold">Rp{{ number_format($transaksi->total_harga, 0, ',', '.') }}</span></p>
+        <p><span>Total Bayar</span> <span>Rp{{ number_format($transaksi->total_bayar, 0, ',', '.') }}</span></p>
+        <p><span>Kembalian</span> <span>Rp{{ number_format($transaksi->kembalian, 0, ',', '.') }}</span></p>
     </div>
 
-    <p class="text-center mt-4 bold">Terima Kasih!</p>
+    <div class="line"></div>
+
+    <p class="text-center thanks">Terima Kasih telah berbelanja di FastKas!</p>
 </body>
 </html>

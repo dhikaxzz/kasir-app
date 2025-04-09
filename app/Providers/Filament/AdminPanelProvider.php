@@ -6,25 +6,26 @@ use Filament\Pages;
 use Filament\Panel;
 use Filament\Widgets;
 use Filament\PanelProvider;
+use Filament\Facades\Filament;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Filament\Support\Assets\Js;
 use Filament\Support\Colors\Color;
+use Illuminate\Support\Facades\View;
+use App\Filament\Widgets\OverviewStats;
 use App\Filament\Resources\UserResource;
 use Filament\Http\Middleware\Authenticate;
+use App\Filament\Widgets\TopPelangganChart;
 use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Filament\Http\Middleware\AuthenticateSession;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
-use Filament\Facades\Filament;
-use Filament\Support\Assets\Js;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\View;
-use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
-use App\Filament\Widgets\TopPelangganChart;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -52,6 +53,7 @@ class AdminPanelProvider extends PanelProvider
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
                 TopPelangganChart::class,
+                OverviewStats::class,
             ])
             ->middleware([
                 EncryptCookies::class,

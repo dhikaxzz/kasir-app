@@ -113,7 +113,14 @@ class TransaksiResource extends Resource
             Forms\Components\TextInput::make('total_harga')
                 ->numeric()
                 ->disabled()
-                ->prefixIcon('heroicon-m-banknotes'),
+                ->prefixIcon('heroicon-m-banknotes')
+                ->reactive()
+                ->afterStateUpdated(function (callable $get, callable $set) {
+                    if (in_array($get('metode_pembayaran'), ['debit', 'qris'])) {
+                        $set('total_bayar', $get('total_harga'));
+                        $set('kembalian', 0);
+                    }
+                }),            
         
             Forms\Components\Select::make('pelanggan_id')
                 ->label('Pelanggan')
@@ -130,7 +137,15 @@ class TransaksiResource extends Resource
                     'qris' => 'QRIS'
                 ])
                 ->required()
-                ->prefixIcon('heroicon-m-credit-card'),
+                ->prefixIcon('heroicon-m-credit-card')
+                ->reactive()
+                ->afterStateUpdated(function ($state, callable $get, callable $set) {
+                    // Kalau metode non-cash, total_bayar otomatis diisi total_harga
+                    if (in_array($state, ['debit', 'qris'])) {
+                        $set('total_bayar', $get('total_harga'));
+                        $set('kembalian', 0);
+                    }
+                }),
         
             Forms\Components\TextInput::make('total_bayar')
                 ->numeric()

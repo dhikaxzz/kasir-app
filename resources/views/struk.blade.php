@@ -96,7 +96,7 @@
     <p class="text-center thanks">Terima Kasih telah berbelanja di FastKas!</p>
 
     <div class="text-center" style="margin-top: 10px;">
-        <img src="data:image/svg+xml;base64,{{ $qreCode }}" width="100" alt="QR Code">
+        <img src="data:image/svg+xml;base64,{{ $qrCode }}" width="100" alt="QR Code">
     </div>
         
 </body>

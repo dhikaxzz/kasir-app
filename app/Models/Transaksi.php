@@ -67,30 +67,6 @@ class Transaksi extends Model
         $this->attributes['total_harga'] = $this->hitungTotalHarga();
     }
 
-    protected static function booted()
-    {
-        static::created(function ($transaksi) {
-            $pelanggan = $transaksi->pelanggan;
-            if ($pelanggan) {
-                $total = self::where('pelanggan_id', $pelanggan->id)->sum('total_harga');
-                $pelanggan->update([
-                    'total_transaksi' => $total,
-                ]);
-            }
-        });
-
-        static::deleted(function ($transaksi) {
-            $pelanggan = $transaksi->pelanggan;
-            if ($pelanggan) {
-                $total = self::where('pelanggan_id', $pelanggan->id)->sum('total_harga');
-                $pelanggan->update([
-                    'total_transaksi' => $total,
-                ]);
-            }
-        });
-        
-    }
-
     public function pelanggan()
     {
         return $this->belongsTo(Pelanggan::class);

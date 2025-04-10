@@ -47,14 +47,14 @@ class PelangganResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Section::make('Informasi Pelanggan')
-                ->description('Masukkan data pelanggan.')
+            Section::make('Informasi Member')
+                ->description('Masukkan data member.')
                 ->schema([
                     Grid::make(2)->schema([
                         TextInput::make('nama')
-                            ->label('Nama Pelanggan')
+                            ->label('Nama Member')
                             ->required()
-                            ->placeholder('Masukkan nama pelanggan')
+                            ->placeholder('Masukkan nama member')
                             ->prefixIcon('heroicon-m-user'),
         
                         TextInput::make('no_telpon')
@@ -70,19 +70,14 @@ class PelangganResource extends Resource
                         TextInput::make('email')
                             ->label('Email')
                             ->email()
-                            ->placeholder('Masukkan email pelanggan')
+                            ->placeholder('Masukkan email member')
                             ->unique(ignoreRecord: true)
                             ->prefixIcon('heroicon-m-envelope'),
         
                         TextInput::make('alamat')
                             ->label('Alamat')
-                            ->placeholder('Masukkan alamat pelanggan')
+                            ->placeholder('Masukkan alamat member')
                             ->prefixIcon('heroicon-m-map'),
-        
-                        Select::make('member')
-                            ->options([true => 'Ya', false => 'Tidak'])
-                            ->required()
-                            ->prefixIcon('heroicon-m-check-circle'),
                     ]),
 
                     Grid::make(2)->schema([

@@ -80,15 +80,6 @@ class BarangResource extends Resource
                             'liter' => 'Liter',
                         ])
                         ->required(),
-                        
-                    FileUpload::make('gambar')
-                        ->label('Gambar Barang')
-                        ->image()
-                        ->directory('barang') // Akan disimpan di storage/app/public/barang
-                        ->imageEditor()
-                        ->previewable(true)
-                        ->downloadable()
-                        ->nullable(),
                 ]),
             ])
             ->columns(1)

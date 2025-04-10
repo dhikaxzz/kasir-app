@@ -66,7 +66,7 @@
     <div class="line"></div>
 
     <p><span class="bold">Tanggal</span>: {{ $transaksi->tanggal }}</p>
-    <p><span class="bold">Pelanggan</span>: {{ $transaksi->pelanggan->nama ?? '-' }}</p>
+    <p><span class="bold">Member</span>: {{ $transaksi->pelanggan->nama ?? '-' }}</p>
     <p><span class="bold">Metode</span>: {{ ucfirst($transaksi->metode_pembayaran) }}</p>
 
     <div class="line"></div>

@@ -123,7 +123,7 @@ class TransaksiResource extends Resource
                 }),            
         
             Forms\Components\Select::make('pelanggan_id')
-                ->label('Pelanggan')
+                ->label('Member')
                 ->relationship('pelanggan', 'nama')
                 ->searchable()
                 ->preload()
@@ -176,7 +176,7 @@ class TransaksiResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('kode_transaksi')->searchable(),
-                TextColumn::make('pelanggan.nama')->label('Pelanggan')->searchable()->sortable(),
+                TextColumn::make('pelanggan.nama')->label('Member')->searchable()->sortable(),
                 TextColumn::make('tanggal')->dateTime()->sortable(),
                 TextColumn::make('total_harga')->money('IDR')->sortable(),
                 TextColumn::make('total_bayar')->money('IDR')->sortable(),

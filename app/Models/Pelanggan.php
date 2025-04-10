@@ -25,4 +25,10 @@ class Pelanggan extends Model
     {
         return $this->hasMany(Transaksi::class);
     }
+
+    public function updateTotalTransaksi()
+    {
+        $this->total_transaksi = $this->transaksis()->sum('total_harga');
+        $this->saveQuietly(); // Biar nggak trigger event tambahan
+    }
 }

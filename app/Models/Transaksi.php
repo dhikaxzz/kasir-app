@@ -40,6 +40,18 @@ class Transaksi extends Model
         static::created(function ($transaksi) {
             $transaksi->refresh(); // Pastikan data terbaru setelah dibuat
         });
+
+        static::saved(function ($transaksi) {
+            if ($transaksi->pelanggan) {
+                $transaksi->pelanggan->updateTotalTransaksi();
+            }
+        });
+    
+        static::deleted(function ($transaksi) {
+            if ($transaksi->pelanggan) {
+                $transaksi->pelanggan->updateTotalTransaksi();
+            }
+        });
     }
     
 

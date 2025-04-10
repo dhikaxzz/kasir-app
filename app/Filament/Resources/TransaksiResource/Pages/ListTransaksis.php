@@ -22,9 +22,8 @@ class ListTransaksis extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
             Action::make('exportPdf')
-                ->label('Export PDF')
+                ->label('Export PDF Laporan Keseluruhan')
                 ->icon('heroicon-o-printer')
                 ->color('primary')
                 ->action(function () {
@@ -84,7 +83,9 @@ class ListTransaksis extends ListRecords
                     return response()->streamDownload(function () use ($pdf) {
                         echo $pdf->stream();
                     }, 'laporan-transaksi.pdf');
-                })
+                }),
+            Actions\CreateAction::make(),
+
         ];
     }
 

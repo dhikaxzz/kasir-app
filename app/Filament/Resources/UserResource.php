@@ -22,20 +22,20 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
 
-    protected static ?string $navigationLabel = 'Kelola Kasir';
+    protected static ?string $navigationLabel = 'Kelola Staff';
 
-    protected static ?string $navigationGroup = 'Manajemen Kasir';
+    protected static ?string $navigationGroup = 'Manajemen Staff';
 
-    protected static ?string $slug = 'kasir'; 
+    protected static ?string $slug = 'staff'; 
 
     public static function getPluralLabel(): string
     {
-        return 'Kasir';
+        return 'Staff';
     }
 
     public static function getModelLabel(): string
     {
-        return 'Kasir';
+        return 'Staff';
     }
 
 

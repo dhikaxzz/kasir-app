@@ -17,10 +17,19 @@ class Pelanggan extends Model
         'no_telpon',
         'alamat',
         'member',
+        'loyalty_level',
+        'total_transaksi',
     ];
 
     public function transaksis()
     {
         return $this->hasMany(Transaksi::class);
     }
+
+    public function updateTotalTransaksi(): void
+    {
+        $this->total_transaksi = $this->transaksis()->sum('total');
+        $this->save();
+    }
+
 }

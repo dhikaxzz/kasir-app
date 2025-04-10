@@ -20,6 +20,7 @@ use Filament\Forms\Components\Section;
 use App\Models\Pembeli;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Support\Colors\Color;
 
 class PelangganResource extends Resource
 {
@@ -71,6 +72,28 @@ class PelangganResource extends Resource
                             ->required()
                             ->prefixIcon('heroicon-m-check-circle'),
                     ]),
+
+                    Grid::make(2)->schema([
+                        Select::make('loyalty_level')
+                            ->label('Level Membership')
+                            ->options([
+                                'regular' => 'Regular',
+                                'silver' => 'Silver',
+                                'gold' => 'Gold',
+                                'platinum' => 'Platinum',
+                            ])
+                            ->default('regular')
+                            ->required()
+                            ->prefixIcon('heroicon-m-star'),
+                    
+                        TextInput::make('total_transaksi')
+                            ->label('Total Transaksi')
+                            ->numeric()
+                            ->default(0)
+                            ->disabled() // biar gak diubah manual
+                            ->dehydrated(false), // biar gak ikut form submit
+                    ]),
+                    
                 ]),
         ]);        
     }
@@ -83,6 +106,20 @@ class PelangganResource extends Resource
                 TextColumn::make('no_telpon')->label('No. Telepon')->searchable()->sortable(),
                 TextColumn::make('email')->label('Email')->searchable()->sortable(),
                 TextColumn::make('alamat')->searchable()->label('Alamat')->limit(50)->sortable(),
+                TextColumn::make('loyalty_level')
+                    ->label('Membership')
+                    ->sortable()
+                    ->badge()
+                    ->color(fn (string $state) => match ($state) {
+                        'platinum' => Color::Gray,
+                        'gold' => Color::Amber,
+                        'silver' => Color::Sky,
+                        'regular' => Color::Slate,
+                    }),
+                TextColumn::make('total_transaksi')
+                    ->label('Total Transaksi')
+                    ->sortable()
+                    ->formatStateUsing(fn ($state) => 'Rp ' . number_format($state, 0, ',', '.')),
             ])
             ->filters([])
 

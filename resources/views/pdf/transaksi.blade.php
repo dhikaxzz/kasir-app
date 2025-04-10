@@ -1,82 +1,82 @@
 <style>
     body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #f5fdf6;
-        color: #2c3e50;
-        padding: 2rem;
+        font-family: 'Arial', sans-serif;
+        background-color: #ffffff;
+        color: #000000;
+        padding: 5mm;
+        font-size: 3.5mm;
     }
 
     h2 {
-        color: #1e824c;
-        font-size: 2rem;
-        margin-bottom: 1rem;
-        border-bottom: 2px solid #1e824c;
-        padding-bottom: 0.5rem;
+        font-size: 5mm;
+        margin-bottom: 3mm;
+        color: #1b5e20;
+        border-bottom: 0.5mm solid #81c784;
+        padding-bottom: 1mm;
     }
 
     h4 {
-        margin-top: 2rem;
-        color: #27ae60;
-        font-size: 1.3rem;
-        border-left: 5px solid #2ecc71;
-        padding-left: 10px;
+        font-size: 4mm;
+        margin-top: 4mm;
+        margin-bottom: 2mm;
+        color: #2e7d32;
+        border-left: 1.5mm solid #81c784;
+        padding-left: 2mm;
     }
 
     .section {
-        background-color: #ffffff;
-        border: 1px solid #dff0d8;
-        border-left: 5px solid #2ecc71;
-        border-radius: 8px;
-        padding: 1.5rem;
-        margin-bottom: 2rem;
-        box-shadow: 0 2px 6px rgba(0, 128, 0, 0.1);
+        padding: 3mm;
+        border: 0.3mm solid #c8e6c9;
+        border-left: 1.5mm solid #66bb6a;
+        margin-bottom: 4mm;
+        border-radius: 2mm;
     }
 
     ul {
-        list-style-type: none;
         padding-left: 0;
-        margin-top: 1rem;
+        margin-top: 2mm;
+        list-style-type: none;
     }
 
     ul li {
-        padding: 0.5rem 0;
-        border-bottom: 1px dashed #c8e6c9;
+        padding: 1.5mm 0;
+        border-bottom: 0.3mm dotted #a5d6a7;
+        font-size: 3.5mm;
     }
 
     table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 1rem;
-        background-color: #fff;
-        border-radius: 6px;
-        overflow: hidden;
+        font-size: 3.5mm;
+        margin-top: 2mm;
     }
 
-    table thead {
-        background-color: #2ecc71;
-        color: white;
+    thead {
+        background-color: #a5d6a7;
+        color: #1b5e20;
     }
 
-    table th, table td {
-        padding: 12px 15px;
-        border-bottom: 1px solid #e0f2e9;
+    th, td {
+        border: 0.2mm solid #c8e6c9;
+        padding: 1.5mm 2mm;
         text-align: left;
     }
 
-    table tbody tr:hover {
-        background-color: #f1fdf3;
+    tbody tr:nth-child(even) {
+        background-color: #f1f8e9;
     }
 
     hr {
         border: none;
-        border-top: 2px dashed #2ecc71;
-        margin: 3rem 0;
+        border-top: 0.3mm dashed #81c784;
+        margin: 6mm 0;
     }
 
     .emoji-title {
-        margin-right: 5px;
+        margin-right: 1mm;
     }
 </style>
+
 
 <h2>Laporan Transaksi</h2>
 

@@ -29,8 +29,8 @@ class OverviewStats extends BaseWidget
                 ->icon('heroicon-o-cube')
                 ->color('info'),
 
-            Stat::make('Total Pelanggan', number_format(Pelanggan::count()))
-                ->description('Pelanggan yang terdaftar')
+            Stat::make('Total Member', number_format(Pelanggan::count()))
+                ->description('Member yang terdaftar')
                 ->icon('heroicon-o-user-group')
                 ->color('primary'),
 

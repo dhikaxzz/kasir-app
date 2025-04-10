@@ -7,7 +7,7 @@ use App\Models\Transaksi;
 
 class TopPelangganChart extends ChartWidget
 {
-    protected static ?string $heading = 'Top 5 Pelanggan dengan Pembelian Terbanyak';
+    protected static ?string $heading = 'Top 5 Member dengan Pembelian Terbanyak';
 
     protected function getData(): array
     {

@@ -28,7 +28,19 @@ class PelangganResource extends Resource
 
     protected static ?string $navigationGroup = 'Manajemen';
 
-    protected static ?string $navigationLabel = 'Kelola Pelanggan'; // Nama di sidebar
+    protected static ?string $navigationLabel = 'Kelola Member'; // Nama di sidebar
+
+    public static function getPluralLabel(): string
+    {
+        return 'Member';
+    }
+
+    public static function getModelLabel(): string
+    {
+        return 'Member';
+    }
+
+    protected static ?string $slug = 'member';
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
 

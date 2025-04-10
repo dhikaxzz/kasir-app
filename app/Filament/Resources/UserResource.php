@@ -26,7 +26,7 @@ class UserResource extends Resource
 
     protected static ?string $navigationGroup = 'Manajemen Kasir';
 
-    protected static ?string $slug = 'kasir'; // Akan jadi /admin/admin-kasir
+    protected static ?string $slug = 'kasir'; 
 
     public static function getPluralLabel(): string
     {

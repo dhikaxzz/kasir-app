@@ -37,6 +37,10 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->passwordReset()
+            ->emailVerification()
+            ->profile()
+            ->registration()
             ->brandName('FastKas Dhika')
             ->resources([
                 UserResource::class,

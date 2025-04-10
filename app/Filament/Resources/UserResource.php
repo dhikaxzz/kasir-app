@@ -26,6 +26,8 @@ class UserResource extends Resource
 
     protected static ?string $navigationGroup = 'Manajemen Staff';
 
+    protected static ?int $navigationSort = 1;
+
     protected static ?string $slug = 'staff'; 
 
     public static function getPluralLabel(): string

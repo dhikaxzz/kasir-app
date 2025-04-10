@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\{TextInput, Section};
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
+use Filament\Notifications\Notification;
+
 
 class KategoriResource extends Resource
 {
@@ -52,6 +54,19 @@ class KategoriResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->before(function ($record) {
+                        if ($record->barangs()->exists()) {
+                            Notification::make()
+                                ->title('Gagal Menghapus Kategori')
+                                ->body('Kategori ini masih digunakan oleh barang dan tidak bisa dihapus.')
+                                ->danger()
+                                ->send();
+
+                            // Throw agar proses penghapusan dibatalkan
+                            throw new \Exception('Kategori masih digunakan.');
+                        }
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

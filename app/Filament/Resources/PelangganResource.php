@@ -105,7 +105,7 @@ class PelangganResource extends Resource
                 TextColumn::make('nama')->searchable()->label('Nama Pelanggan')->sortable(),
                 TextColumn::make('no_telpon')->label('No. Telepon')->searchable()->sortable(),
                 TextColumn::make('email')->label('Email')->searchable()->sortable(),
-                TextColumn::make('alamat')->searchable()->label('Alamat')->limit(50)->sortable(),
+                TextColumn::make('alamat')->searchable()->label('Alamat')->limit(25)->sortable(),
                 TextColumn::make('loyalty_level')
                     ->label('Membership')
                     ->sortable()

@@ -127,8 +127,10 @@ class TransaksiResource extends Resource
                 ->relationship('pelanggan', 'nama')
                 ->searchable()
                 ->preload()
-                ->required()
-                ->prefixIcon('heroicon-m-user'),
+                ->nullable() // kolomnya opsional
+                ->prefixIcon('heroicon-m-user')
+                ->default(null), // default biar tetap null
+            
         
             Forms\Components\Select::make('metode_pembayaran')
                 ->options([
